@@ -1,6 +1,5 @@
 import time
 import datetime as dt
-import requests
 import pandas as pd
 import pandas_ta as ta
 import numpy as np
@@ -24,7 +23,7 @@ def on_message(ws, message):
         VOLUME_ARRAY.append(volume)
         CLOSE_ARRAY.append(close)
 
-        msg = f"{pd.to_datetime(candle['t'], unit='ms')} volume = {volume} ARB"
+        # msg = f"{pd.to_datetime(candle['t'], unit='ms')} volume = {volume} ARB"
 
         print(f"Candle opened at {pd.to_datetime(candle['t'], unit='ms')} has closed.")
         print(f"Volume = {volume}")
@@ -40,7 +39,7 @@ def on_message(ws, message):
             rsi_val = pd.DataFrame({"close": CLOSE_ARRAY}).ta.rsi().values[-1]
             print(f"RSI = {np.round(rsi_val):.4f}")
 
-            if (rsi_val > 70  or rsi_val < 30) and cross == False:
+            if (rsi_val > 70 or rsi_val < 30) and cross == False:
                 cross = True
                 msg = f"{pd.to_datetime(candle['t'], unit='ms')}, RSI = {rsi_val}"
                 webhook = DiscordWebhook(url=WEBHOOK_URL, content=msg)
