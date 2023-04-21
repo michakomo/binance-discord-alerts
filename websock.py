@@ -37,7 +37,7 @@ def on_message(ws, message):
 
         if len(close_array) > 14:
             rsi_val = pd.DataFrame({"close": close_array}).ta.rsi().values[-1]
-            print(f"RSI = {np.round(rsi_val):.4f}")
+            print(f"RSI = {np.round(rsi_val, 2)}")
 
             if not cross and (rsi_val < 30 or rsi_val > 70):
                 cross = True
